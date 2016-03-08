@@ -43,14 +43,14 @@ classdef MLClassifier
         end
         
         
-    function Y = ML_Classify(obj, point)
+    function Y = Classify(obj, point)
         Gaussa = 1/(sqrt(2*pi)*det(obj.aSigma))*exp(-0.5*(point-obj.aMu')'*inv(obj.aSigma)*(point-obj.aMu'));
         Gaussb = 1/(sqrt(2*pi)*det(obj.bSigma))*exp(-0.5*(point-obj.bMu')'*inv(obj.bSigma)*(point-obj.bMu'));
         Gaussc = 1/(sqrt(2*pi)*det(obj.cSigma))*exp(-0.5*(point-obj.cMu')'*inv(obj.cSigma)*(point-obj.cMu'));
         [~, Y] = max([Gaussa Gaussb Gaussc]);
     end
     
-    function Plot(obj,class1,class2,class3)
+    function Plot(obj)
         dx= 5;
         x1 = obj.XMin:dx:obj.XMax;
         x2 = obj.YMin:dx:obj.YMax;
@@ -58,13 +58,10 @@ classdef MLClassifier
         for i = 1: length(x1)
             for j=1:length(x2)
                 v=[x1(i);x2(j)];
-                Y(i,j) = obj.ML_Classify(v);
+                Y(i,j) = obj.Classify(v);
             end
         end
          contour(x1,x2,Y,2);
-         hold on
-         plot(class1(:,1),class1(:,2),'.r');plot(class2(:,1),class2(:,2),'xb');plot(class3(:,1),class3(:,2),'^g');
-         hold off
     end
     
   end

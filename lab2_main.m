@@ -126,22 +126,62 @@ figureNo = figureNo +1;
 
 %% Question 2
 
+% Parametric Classifier
+
 clearvars -except figureNo;
 % close all; % temporary
 load('lab2_2.mat');
 
 MLClassifier = MLClassifier(al,bl,cl);
 figure(figureNo)
-MLClassifier.Plot(al,bl,cl);
+MLClassifier.Plot();
+
+
+
+hold on
+plot(al(:,1),al(:,2),'.r');plot(bl(:,1),bl(:,2),'xb');plot(cl(:,1),cl(:,2),'^g');
+hold off
+
 figureNo = figureNo +1;
 
-% aMu = sum(al)/length(al);
-% bMu = sum(bl)/length(bl);
-% cMu = sum(cl)/length(cl);
+% Non Parametric Classifier
+variance = 400;
+
+MLNonParametricClassifier = MLNonParametricClassifier(al,bl,cl,variance,5, [10 10]);
+figure(figureNo)
+MLNonParametricClassifier.Plot();
+hold on
+plot(al(:,1),al(:,2),'.r');plot(bl(:,1),bl(:,2),'xb');plot(cl(:,1),cl(:,2),'^g');
+hold off
+
+figureNo = figureNo +1;
+
+% clearvars -except al bl cl% temp clear
+% close all % temp close
+% 
+% xMin = min([min(al(:,1)) min(bl(:,1)) min(cl(:,1))]);
+% xMax = max([max(al(:,1)) max(bl(:,1)) max(cl(:,1))]);
+%             
+% yMin = min([min(al(:,2)) min(bl(:,2)) min(cl(:,2))]);
+% yMax = max([max(al(:,2)) max(bl(:,2)) max(cl(:,2))]);
 % 
 % 
-% aSigma = Lab2.CalCovariance(al,aMu);
-% bSigma = Lab2.CalCovariance(al,aMu);
-% cSigma = Lab2.CalCovariance(al,aMu);
-
-
+% 
+% 
+% varianceParzen2D = 400;
+% ParzenWin = fspecial('gaussian',[10 10] , sqrt(400));
+% resolution = [1 xMin yMin xMax yMax];
+% 
+% 
+% [parzena, xa, ya] = parzen(al, resolution, ParzenWin);
+% [parzenb, xb, yb] = parzen(bl, resolution, ParzenWin);
+% [parzenc, xc, yc] = parzen(cl, resolution, ParzenWin);
+% 
+% probs{1} = parzena;
+% probs{2} = parzenb;
+% probs{3} = parzenc;
+% 
+% 
+% clearvars -except probs % temp clear variables
+% 
+% pdfa = cell2mat(probs(1));
