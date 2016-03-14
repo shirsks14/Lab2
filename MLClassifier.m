@@ -61,7 +61,7 @@ classdef MLClassifier
                 Y(i,j) = obj.Classify(v);
             end
         end
-         contour(x1,x2,Y,2);
+         contourf(x1,x2,Y,[2 3]);
     end
     
   end

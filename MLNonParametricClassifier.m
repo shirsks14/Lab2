@@ -29,7 +29,7 @@ classdef MLNonParametricClassifier
         
         ParzenWin = fspecial('gaussian', size , sqrt(variance));
         obj.res = res;
-        resolution = [obj.res, obj.XMin, obj.YMin, obj.XMax, obj.YMax];
+        resolution = [obj.res, 0, 0, 500 - mod(500,res), 500- mod(500,res)];
 
 
         [obj.parzena, obj.x, obj.y] = parzen(class1, resolution, ParzenWin);
@@ -40,26 +40,43 @@ classdef MLNonParametricClassifier
         
         function Y = Classify(obj, Point)
             Y = -1;
-            a = obj.parzena(Point(1), Point(2));
-            b = obj.parzenb(Point(1), Point(2));
-            c = obj.parzenc(Point(1), Point(2));
+            x_int = int32(Point(1)/obj.res)+1;
+            y_int = int32(Point(2)/obj.res)+1;
             
-            [~, Y] = max([a b c]);
+            if((x_int <= size(obj.parzena,1))&&(y_int <= size(obj.parzena,2)))
+                a = obj.parzena(int32(Point(1)/obj.res)+1, int32(Point(2)/obj.res)+1);
+            else
+                a = 0;
+            end
+            if((x_int <= size(obj.parzenb,1))&&(y_int <= size(obj.parzenb,2)))
+                b = obj.parzenb(int32(Point(1)/obj.res)+1, int32(Point(2)/obj.res)+1);
+            else
+                b =0;
+            end
+            if((x_int <= size(obj.parzenc,1))&&(y_int <= size(obj.parzenc,2)))
+                c = obj.parzenc(int32(Point(1)/obj.res)+1, int32(Point(2)/obj.res)+1);
+            else
+                c = 0;
+            end
+            
+            if(max([a b c])  ~= 0)
+                [~, Y] = max([a b c]);
+            end
         end
         
         function Plot(obj)
         dx= obj.res;
-        x1 = obj.XMin:dx:obj.XMax;
-        x2 = obj.YMin:dx:obj.YMax;
+        x1 = 1:dx:500- mod(500,obj.res);
+        x2 = 1:dx:500- mod(500,obj.res);
         Y = zeros(length(x1), length(x2));
-        for i = 1: obj.y
-            for j=1:obj.x
+        for i = 1: length(x1)
+            for j=1:length(x2)
                 v=[x1(i), x2(j)];
                 Y(j,i) = obj.Classify(v);
             end
         end
         temp = size(Y, 2);
-         contourf(x1,x2,Y);
+         contourf(x1,x2,Y, [2 3]);
          
         end
     end

@@ -1,18 +1,23 @@
+% Lab 2
+% Name: Shirshak Shrestha
+
 clear all;
 close all;
 
-load('lab2_1.mat');
+
 
 figureNo = 1;
 %% Question 1
 % Parametric Gaussian Distribution Estimation
 % class a
-x1 = 0:0.1:10;
+load('lab2_1.mat');
 AaMu = 5;
 AaSigma = 1;
 AbLam = 1;
-AaGPdf = normpdf(x1,AaMu,AaSigma);
-AbEPdf = exppdf(x1,AbLam);
+
+
+% AaGPdf = normpdf(x1,AaMu,AaSigma);
+% AbEPdf = exppdf(x1,AbLam);
 
 EaMu = (1/length(a)) * sum(a);
 EaSigma =  0;
@@ -25,11 +30,11 @@ end
 EaSigma = EaSigma/length(a);
 
 
-EaGPdf = normpdf(x1,EaMu,EaSigma);
 figure(figureNo)
-plot(x1,EaGPdf, 'g');
+Lab2Utils.PlotGauss(EaMu,EaSigma,'g');
+% plot(x1,EaGPdf, 'g');
 hold on
-plot(x1,AaGPdf, 'r');
+Lab2Utils.PlotGauss(AaMu,AaSigma,'r');
 figureNo = figureNo +1;
 % class b
 AbLam = 1;
@@ -41,86 +46,75 @@ for i = 1:length(b)
 end
 EbSigma = EbSigma/length(b);
 
-EbGPdf = normpdf(x1,EbMu,EbSigma);
-
 figure(figureNo)
-plot(x1,EbGPdf, 'g');
+Lab2Utils.PlotGauss(EaMu,EaSigma,'g');
 hold on
-plot(x1,AbEPdf, 'r');
+Lab2Utils.PlotExp(AbLam, 'r');
 figureNo = figureNo +1;
 
 % Parametric Exponential distribution
 % class a
 EaLam = length(a)/(sum(a));
 
-EaEPdf = exppdf(x1, EaLam);
-
 figure (figureNo)
-plot(x1, EaEPdf, 'g');
+Lab2Utils.PlotExp(EaLam, 'g');
 hold on
-plot(x1, AaGPdf, 'r');
+Lab2Utils.PlotGauss(AaMu,AaSigma,'r');
 figureNo = figureNo +1;
 
 % class b
 EbLam = length(b)/(sum(b));
 
-EbEPdf = exppdf(x1, EbLam);
-
 figure (figureNo)
-plot(x1, EbEPdf, 'g');
+Lab2Utils.PlotExp(EaLam, 'g');
 hold on
-plot(x1, AbEPdf, 'r');
+Lab2Utils.PlotExp(AbLam, 'r');
 figureNo = figureNo +1;
 
 % Uniform
 % class a
-EaUPdf = unifpdf(x1, min(a), max(a));
 figure(figureNo)
-plot(x1, EaUPdf, 'g');
+Lab2Utils.PlotUni(min(a), max(a), 'g');
 hold on
-plot(x1, AaGPdf, 'r');
+Lab2Utils.PlotGauss(AaMu,AaSigma,'r');
 figureNo = figureNo +1;
 
 % class b
-EbUPdf = unifpdf(x1, min(b), max(b));
 figure(figureNo)
-plot(x1, EbUPdf, 'g');
+Lab2Utils.PlotUni(min(b), max(b), 'g');
 hold on
-plot(x1, AbEPdf, 'r');
+Lab2Utils.PlotExp(AbLam, 'r');
 figureNo = figureNo +1;
 % Parzen Method
 % class a
 % Simga = 0.1
 
-ParzenYa1 = Lab2Utils.ParzenGaussEstimation(x1,a,0.1,10);
 figure(figureNo)
-plot(x1,ParzenYa1);
+Lab2Utils.PlotPar(a,0.1,1, 'g');
 hold on
-plot(x1,AaGPdf);
+Lab2Utils.PlotGauss(AaMu,AaSigma,'r');
+
+figureNo = figureNo +1;
+% close all % temporary close all
+figure(figureNo)
+Lab2Utils.PlotPar(a,0.4,22, 'g');
+hold on
+Lab2Utils.PlotGauss(AaMu,AaSigma,'r');
 
 figureNo = figureNo +1;
 
-ParzenYa2 = Lab2Utils.ParzenGaussEstimation(x1,a,0.4,10);
+% class b
 figure(figureNo)
-plot(x1,ParzenYa2);
+Lab2Utils.PlotPar(b,0.1,10, 'g');
 hold on
-plot(x1,AaGPdf);
+Lab2Utils.PlotExp(AbLam, 'r');
 
 figureNo = figureNo +1;
 
-ParzenYb1 = Lab2Utils.ParzenGaussEstimation(x1,b,0.1,10);
 figure(figureNo)
-plot(x1,ParzenYb1);
+Lab2Utils.PlotPar(b,0.4,10, 'g');
 hold on
-plot(x1,AbEPdf);
-
-figureNo = figureNo +1;
-
-ParzenYb2 = Lab2Utils.ParzenGaussEstimation(x1,b,0.4,10);
-figure(figureNo)
-plot(x1,ParzenYb2);
-hold on
-plot(x1,AbEPdf);
+Lab2Utils.PlotExp(AbLam, 'r');
 
 figureNo = figureNo +1;
 
@@ -147,7 +141,7 @@ figureNo = figureNo +1;
 % Non Parametric Classifier
 variance = 400;
 
-MLNonParametricClassifier = MLNonParametricClassifier(al,bl,cl,variance,5, [10 10]);
+MLNonParametricClassifier = MLNonParametricClassifier(al,bl,cl,variance,10, [32 32]);
 figure(figureNo)
 MLNonParametricClassifier.Plot();
 hold on
