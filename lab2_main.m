@@ -179,3 +179,51 @@ figureNo = figureNo +1;
 % clearvars -except probs % temp clear variables
 % 
 % pdfa = cell2mat(probs(1));
+
+%% question 3
+
+% clearvars -expect figureNo;
+clear all;
+close all; % temp close all
+load('lab2_3.mat');
+SequentialClassifier = SequentialClassifier(a,b);
+p = SequentialClassifier.Sequential_ClassifyClass(a);
+q = SequentialClassifier.Sequential_ClassifyClass(b);
+
+% a = a';
+% b= b';
+% % G = MEDClassifier;
+% naB = [];
+% nbA = [];
+% counter = 1; % j from the lab
+% Na = size(a,2);
+% Nb = size(b,2);
+% while ((size(a,2) ~= 0) && (size(b,2) ~=0))
+%     A_num = randi([1, size(a,2)]);
+%     B_num = randi([1, size(b,2)]);
+%     AMu = a(:,A_num);
+%     BMu = b(:,B_num);
+%     MED = MEDClassifier(AMu, BMu);
+%     naB_temp = MED.DataClassification(a);
+%     naB_temp = naB_temp(2);
+%     nbA_temp = MED.DataClassification(b);
+%     nbA_temp = nbA_temp(2);
+%     if((nbA_temp == 0) || (naB_temp ==0))
+%         G{counter} = MED;
+%         naB(counter) = naB_temp;
+%         nbA(counter) = nbA_temp;
+%         counter = counter +1;
+%     end
+%     if(naB_temp ==0)
+%         a(:,A_num) = [];
+%     end
+%     if(nbA_temp == 0)
+%         b(:,B_num) = [];
+%     end
+% end
+
+
+
+
+
+

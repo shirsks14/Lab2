@@ -75,7 +75,6 @@ classdef MLNonParametricClassifier
                 Y(j,i) = obj.Classify(v);
             end
         end
-        temp = size(Y, 2);
          contourf(x1,x2,Y, [2 3]);
          
         end
