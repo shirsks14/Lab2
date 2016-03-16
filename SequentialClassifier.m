@@ -6,16 +6,21 @@ classdef SequentialClassifier
    end
    
    methods
-       function obj = SequentialClassifier(a, b)
+       function obj = SequentialClassifier(a, b, j)
            a = a';
            b= b';
+           
+           if(nargin == 2)
+               j = size(a,2) + size(b,2);
+           end
+           
            % G = MEDClassifier;
 %            naB = [];
 %            nbA = [];
            counter = 1; % j from the lab
 %            Na = size(a,2);
 %            Nb = size(b,2);
-           while ((size(a,2) ~= 0) && (size(b,2) ~=0))
+           while ((size(a,2) ~= 0) && (size(b,2) ~=0) && (counter <= j))
                A_num = randi([1, size(a,2)]);
                B_num = randi([1, size(b,2)]);
                AMu = a(:,A_num);
@@ -32,10 +37,10 @@ classdef SequentialClassifier
                    counter = counter +1;
                end
                if(naB_temp ==0)
-                   a(:,A_num) = [];
+                   b(:,B_num) = [];
                end
                if(nbA_temp == 0)
-                   b(:,B_num) = [];
+                   a(:,A_num) = [];
                end
           end
        end
@@ -46,11 +51,11 @@ classdef SequentialClassifier
            done = false;
             while((counter ~= NG) && (done == false)) 
                 temp_class = obj.G{counter}.MED_Classify(point);
-                if((temp_class == 1)&&(obj.naB(counter) ==0))
+                if((temp_class == 2)&&(obj.naB(counter) ==0))
                     Y = temp_class;
                     done = true;
                 end
-                if((temp_class == 2)&&(obj.nbA(counter) == 0))
+                if((temp_class == 1)&&(obj.nbA(counter) == 0))
                     Y = temp_class;
                     done = true;
                 end
