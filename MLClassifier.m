@@ -45,21 +45,22 @@ classdef MLClassifier
         
         function Y = Classify(obj, point)
             
-%             distancea = (point - obj.aMu')'*obj.aSigma*(point - obj.aMu') - log(det(obj.aSigma));
-%             distanceb = (point - obj.bMu')'*obj.bSigma*(point - obj.bMu') - log(det(obj.bSigma));
-%             distancec = (point - obj.cMu')'*obj.cSigma*(point - obj.cMu') - log(det(obj.cSigma));
+%             distancea = (point - obj.aMu')'*obj.aSigma*(point - obj.aMu') + log(det(obj.aSigma));
+%             distanceb = (point - obj.bMu')'*obj.bSigma*(point - obj.bMu') + log(det(obj.bSigma));
+%             distancec = (point - obj.cMu')'*obj.cSigma*(point - obj.cMu') + log(det(obj.cSigma));
             Gaussa = 1/(sqrt(2*pi)*det(obj.aSigma))*exp(-0.5*(point-obj.aMu')'*inv(obj.aSigma)*(point-obj.aMu'));
             Gaussb = 1/(sqrt(2*pi)*det(obj.bSigma))*exp(-0.5*(point-obj.bMu')'*inv(obj.bSigma)*(point-obj.bMu'));
             Gaussc = 1/(sqrt(2*pi)*det(obj.cSigma))*exp(-0.5*(point-obj.cMu')'*inv(obj.cSigma)*(point-obj.cMu'));
             [~, Y] = max([Gaussa Gaussb Gaussc]);
+%             [~, Y] = max([distancea distanceb distancec]);
         end
     
        function Y = MLClassifier_ClassifyClass(obj, class)
            nA = 0;
            nB = 0;
            nC = 0;
-           for i= 1:size(class,2)
-              x = [class(1,i) class(2,i)]';
+           for i= 1:size(class,1)
+              x = [class(i,1) class(i,2)]';
               temp_class = obj.Classify(x);
               if(temp_class == 1)
                  nA = nA +1; 

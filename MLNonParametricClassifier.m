@@ -43,18 +43,18 @@ classdef MLNonParametricClassifier
             x_int = int32(Point(1)/obj.res)+1;
             y_int = int32(Point(2)/obj.res)+1;
             
-            if((x_int <= size(obj.parzena,1))&&(y_int <= size(obj.parzena,2)))
-                a = obj.parzena(int32(Point(1)/obj.res)+1, int32(Point(2)/obj.res)+1);
+            if((x_int <= size(obj.parzena,2))&&(y_int <= size(obj.parzena,1)))
+                a = obj.parzena(y_int, x_int);
             else
                 a = 0;
             end
-            if((x_int <= size(obj.parzenb,1))&&(y_int <= size(obj.parzenb,2)))
-                b = obj.parzenb(int32(Point(1)/obj.res)+1, int32(Point(2)/obj.res)+1);
+            if((x_int <= size(obj.parzenb,2))&&(y_int <= size(obj.parzenb,1)))
+                b = obj.parzenb(y_int, x_int);
             else
                 b =0;
             end
-            if((x_int <= size(obj.parzenc,1))&&(y_int <= size(obj.parzenc,2)))
-                c = obj.parzenc(int32(Point(1)/obj.res)+1, int32(Point(2)/obj.res)+1);
+            if((x_int <= size(obj.parzenc,2))&&(y_int <= size(obj.parzenc,1)))
+                c = obj.parzenc(y_int, x_int);
             else
                 c = 0;
             end
@@ -68,8 +68,8 @@ classdef MLNonParametricClassifier
            nA = 0;
            nB = 0;
            nC = 0;
-           for i= 1:size(class,2)
-              x = [class(1,i) class(2,i)]';
+           for i= 1:size(class,1)
+              x = [class(i,1) class(i, 2)]';
               temp_class = obj.Classify(x);
               if(temp_class == 1)
                  nA = nA +1; 
@@ -95,7 +95,7 @@ classdef MLNonParametricClassifier
                 Y(j,i) = obj.Classify(v);
             end
         end
-         contourf(x1,x2,Y, [2 3]);
+         contourf(x1,x2,Y,[2 3]);
          
         end
     end

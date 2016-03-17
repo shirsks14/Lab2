@@ -129,6 +129,7 @@ MLClassifier = MLClassifier(al,bl,cl);
 figure(figureNo)
 MLClassifier.Plot();
 
+
 Classify_at = MLClassifier.MLClassifier_ClassifyClass(at);
 Classify_bt = MLClassifier.MLClassifier_ClassifyClass(bt);
 Classify_ct = MLClassifier.MLClassifier_ClassifyClass(ct);
@@ -187,7 +188,7 @@ Error_1 = (size(a,1)+size(b,1) - (p_1(1) + q_1(2)))/(size(a,1)+size(b,1));
 SequentialClassifier_2 = SequentialClassifier(a,b);
 p_2 = SequentialClassifier_2.Sequential_ClassifyClass(a);
 q_2 = SequentialClassifier_2.Sequential_ClassifyClass(b);
-Error_2 = (size(a,1)+size(b,2) - (p_2(1) + q_2(2)))/(size(a,1)+size(b,2));
+Error_2 = (size(a,1)+size(b,1) - (p_2(1) + q_2(2)))/(size(a,1)+size(b,2));
 
 figure(figureNo)
 SequentialClassifier_2.Plot(minX,minY, maxX, maxY);
@@ -199,7 +200,7 @@ figureNo = figureNo +1;
 SequentialClassifier_3 = SequentialClassifier(a,b);
 p_3 = SequentialClassifier_3.Sequential_ClassifyClass(a);
 q_3 = SequentialClassifier_3.Sequential_ClassifyClass(b);
-Error_3 = (size(a,1)+size(b,2) - (p_3(1) + q_3(2)))/(size(a,1)+size(b,2));
+Error_3 = (size(a,1)+size(b,1) - (p_3(1) + q_3(2)))/(size(a,1)+size(b,2));
 
 figure(figureNo)
 SequentialClassifier_3.Plot(minX,minY, maxX, maxY);
@@ -213,7 +214,7 @@ for i = 1:20
         SequentialClassifier = SequentialClassifier(a,b,j);
         p = SequentialClassifier.Sequential_ClassifyClass(a);
         q = SequentialClassifier.Sequential_ClassifyClass(b);
-        Error(i,j) = (size(a,1)+size(b,2) - (p(1) + q(2)))/(size(a,1)+size(b,2));
+        Error(i,j) = (size(a,1)+size(b,1) - (p(1) + q(2)))/(size(a,1)+size(b,1));
         clear SequentialClassifier;
     end
 end
@@ -236,7 +237,7 @@ plot(1:1:5,Error_avg, 'r');
 hold on
 plot(1:1:5,Error_min, 'g');
 plot(1:1:5,Error_max, 'b');
-plot(1:1:5,Error_Sigma, 'k');
+plot(1:1:5,sqrt(Error_Sigma), 'k');
 figureNo = figureNo + 1;
 
 

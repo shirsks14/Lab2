@@ -49,7 +49,7 @@ classdef SequentialClassifier
            counter = 1;
            NG = length(obj.G);
            done = false;
-            while((counter ~= NG) && (done == false)) 
+            while((counter <= NG) && (done == false)) 
                 temp_class = obj.G{counter}.MED_Classify(point);
                 if((temp_class == 2)&&(obj.naB(counter) ==0))
                     Y = temp_class;
