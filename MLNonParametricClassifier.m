@@ -64,6 +64,26 @@ classdef MLNonParametricClassifier
             end
         end
         
+        function Y = MLNonParametricClassifier_ClassifyClass(obj, class)
+           nA = 0;
+           nB = 0;
+           nC = 0;
+           for i= 1:size(class,2)
+              x = [class(1,i) class(2,i)]';
+              temp_class = obj.Classify(x);
+              if(temp_class == 1)
+                 nA = nA +1; 
+              end
+              if(temp_class == 2)
+                 nB = nB +1; 
+              end 
+              if(temp_class == 3)
+                 nC = nC +1; 
+              end 
+           end
+           Y = [nA nB nC];
+       end 
+        
         function Plot(obj)
         dx= obj.res;
         x1 = 1:dx:500- mod(500,obj.res);

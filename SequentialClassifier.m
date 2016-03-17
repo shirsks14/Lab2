@@ -78,5 +78,18 @@ classdef SequentialClassifier
            end
            Y = [nA nB];
        end
+       function Plot(obj,minX, minY, maxX, maxY)
+           x1 = minX -5: 1: maxX +5;
+           x2 = minY -5 :1:maxY+5;
+           Y = zeros(length(x2),length(x1));
+           for i = 1:length(x1)
+               for j = 1:length(x2)
+                  v = [x1(i) x2(j)]';
+                  Y(j,i) = obj.Sequential_Classify(v);
+               end
+           end
+           contour(x1,x2,Y);
+       end
+       
    end 
 end
