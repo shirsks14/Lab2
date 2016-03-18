@@ -35,6 +35,9 @@ Lab2Utils.PlotGauss(EaMu,EaSigma,'g');
 % plot(x1,EaGPdf, 'g');
 hold on
 Lab2Utils.PlotGauss(AaMu,AaSigma,'r');
+xlabel('x');
+ylabel('P(x|C)');
+title('Class A Gaussian');
 figureNo = figureNo +1;
 % class b
 EbMu = (1/length(b)) * sum(b);
@@ -49,6 +52,9 @@ figure(figureNo)
 Lab2Utils.PlotGauss(EaMu,EaSigma,'g');
 hold on
 Lab2Utils.PlotExp(AbLam, 'r');
+xlabel('x');
+ylabel('P(x|C)');
+title('Class B Gaussian');
 figureNo = figureNo +1;
 
 % Parametric Exponential distribution
@@ -59,6 +65,9 @@ figure (figureNo)
 Lab2Utils.PlotExp(EaLam, 'g');
 hold on
 Lab2Utils.PlotGauss(AaMu,AaSigma,'r');
+xlabel('x');
+ylabel('P(x|C)');
+title('Class A Exp');
 figureNo = figureNo +1;
 
 % class b
@@ -68,6 +77,9 @@ figure (figureNo)
 Lab2Utils.PlotExp(EaLam, 'g');
 hold on
 Lab2Utils.PlotExp(AbLam, 'r');
+xlabel('x');
+ylabel('P(x|C)');
+title('Class B Exp');
 figureNo = figureNo +1;
 
 % Uniform
@@ -76,6 +88,9 @@ figure(figureNo)
 Lab2Utils.PlotUni(min(a), max(a), 'g');
 hold on
 Lab2Utils.PlotGauss(AaMu,AaSigma,'r');
+xlabel('x');
+ylabel('P(x|C)');
+title('Class A Uniform');
 figureNo = figureNo +1;
 
 % class b
@@ -83,6 +98,9 @@ figure(figureNo)
 Lab2Utils.PlotUni(min(b), max(b), 'g');
 hold on
 Lab2Utils.PlotExp(AbLam, 'r');
+xlabel('x');
+ylabel('P(x|C)');
+title('Class B Uniform');
 figureNo = figureNo +1;
 % Parzen Method
 % class a
@@ -92,14 +110,18 @@ figure(figureNo)
 Lab2Utils.PlotPar(a,0.1,1, 'g');
 hold on
 Lab2Utils.PlotGauss(AaMu,AaSigma,'r');
-
+xlabel('x');
+ylabel('P(x|C)');
+title('Class A Parzen(0.1)');
 figureNo = figureNo +1;
 % close all % temporary close all
 figure(figureNo)
 Lab2Utils.PlotPar(a,0.2,1, 'g');
 hold on
 Lab2Utils.PlotGauss(AaMu,AaSigma,'r');
-
+xlabel('x');
+ylabel('P(x|C)');
+title('Class A Parzen(0.4)');
 figureNo = figureNo +1;
 
 % class b
@@ -107,13 +129,19 @@ figure(figureNo)
 Lab2Utils.PlotPar(b,0.1,1, 'g');
 hold on
 Lab2Utils.PlotExp(AbLam, 'r');
-
+xlabel('x');
+ylabel('P(x|C)');
+title('Class B Parzen(0.1)');
 figureNo = figureNo +1;
 
 figure(figureNo)
 Lab2Utils.PlotPar(b,0.2,1, 'g');
 hold on
 Lab2Utils.PlotExp(AbLam, 'r');
+
+xlabel('x');
+ylabel('P(x|C)');
+title('Class B Parzen(0.4)');
 
 figureNo = figureNo +1;
 
@@ -139,8 +167,9 @@ Total_Misclassified_para = Total_N - (Classify_at(1) + Classify_bt(2) + Classify
 Error_ML_Parametric = Total_Misclassified_para/Total_N
 hold on
 plot(al(:,1),al(:,2),'.r');plot(bl(:,1),bl(:,2),'xb');plot(cl(:,1),cl(:,2),'^g');
-hold off
-
+xlabel('Feature 1');
+ylabel('Feature 2');
+title('Parametric ML Boundary Line');
 figureNo = figureNo +1;
 
 % Non Parametric Classifier
@@ -159,6 +188,10 @@ Error_ML_NonParametric = Total_Misclassified_Nonpara/Total_N
 
 hold on
 plot(al(:,1),al(:,2),'.r');plot(bl(:,1),bl(:,2),'xb');plot(cl(:,1),cl(:,2),'^g');
+
+xlabel('Feature 1');
+ylabel('Feature 2');
+title('Parzen ML Boundary Line');
 
 figureNo = figureNo +1;
 
@@ -180,7 +213,10 @@ maxY = max([max(a(:,2)) max(b(:,2))]);
 figure(figureNo)
 SequentialClassifier_1.Plot(minX,minY, maxX, maxY);
 hold on
-plot(a(:,1),a(:,2),'.r');plot(b(:,1),b(:,2),'xb')
+plot(a(:,1),a(:,2),'.r');plot(b(:,1),b(:,2),'xb');
+xlabel('Feature 1');
+ylabel('Feature 2');
+title('Sequential 1 Boundary Lines');
 figureNo = figureNo +1;
 
 Error_1 = (size(a,1)+size(b,1) - (p_1(1) + q_1(2)))/(size(a,1)+size(b,1));
@@ -193,7 +229,10 @@ Error_2 = (size(a,1)+size(b,1) - (p_2(1) + q_2(2)))/(size(a,1)+size(b,2));
 figure(figureNo)
 SequentialClassifier_2.Plot(minX,minY, maxX, maxY);
 hold on
-plot(a(:,1),a(:,2),'.r');plot(b(:,1),b(:,2),'xb')
+plot(a(:,1),a(:,2),'.r');plot(b(:,1),b(:,2),'xb');
+xlabel('Feature 1');
+ylabel('Feature 2');
+title('Sequential 2 Boundary Lines');
 figureNo = figureNo +1;
 
 % sequential classifier 3
@@ -205,7 +244,10 @@ Error_3 = (size(a,1)+size(b,1) - (p_3(1) + q_3(2)))/(size(a,1)+size(b,2));
 figure(figureNo)
 SequentialClassifier_3.Plot(minX,minY, maxX, maxY);
 hold on
-plot(a(:,1),a(:,2),'.r');plot(b(:,1),b(:,2),'xb')
+plot(a(:,1),a(:,2),'.r');plot(b(:,1),b(:,2),'xb');
+xlabel('Feature 1');
+ylabel('Feature 2');
+title('Sequential 3 Boundary Lines');
 figureNo = figureNo +1;
 
 Error = zeros(20,5);
@@ -238,6 +280,9 @@ hold on
 plot(1:1:5,Error_min, 'g');
 plot(1:1:5,Error_max, 'b');
 plot(1:1:5,sqrt(Error_Sigma), 'k');
+xlabel('J');
+ylabel('Error');
+title('Error vs J');
 figureNo = figureNo + 1;
 
 
